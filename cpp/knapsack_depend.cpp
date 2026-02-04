@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
                 pkg.weight = items[i].weight;
                 pkg.value = items[i].value;
                 pkg.items.push_back(i);
-                pkg.desc = "Main" + to_string(i + 1);
+                pkg.desc = "主物品" + to_string(i + 1);
                 
                 for (int j = 0; j < numAtts; j++) {
                     if (mask & (1 << j)) {
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
                         pkg.weight += items[attIdx].weight;
                         pkg.value += items[attIdx].value;
                         pkg.items.push_back(attIdx);
-                        pkg.desc += "+Attachment" + to_string(attIdx + 1);
+                        pkg.desc += "+附属物品" + to_string(attIdx + 1);
                     }
                 }
                 packages.push_back(pkg);

@@ -90,7 +90,7 @@ const isOnPath = (row, col) => {
 
 // Get item information
 const getItemInfo = (index) => {
-  if (index === 0) return { label: '0', desc: 'Initial' }
+  if (index === 0) return { label: '0', desc: '初始' }
   const item = props.data.items[index - 1]
   return { 
     label: `${index}`, 
@@ -105,38 +105,38 @@ const getItemInfo = (index) => {
     <div class="dimension-info">
       <div class="dim-item">
         <span class="dim-icon">📦</span>
-        <span class="dim-label">Weight capacity:</span>
+        <span class="dim-label">重量容量：</span>
         <span class="dim-value">{{ data.capacity }}</span>
       </div>
       <div class="dim-item">
         <span class="dim-icon">📐</span>
-        <span class="dim-label">Volume capacity:</span>
+        <span class="dim-label">体积容量：</span>
         <span class="dim-value">{{ data.capacity2 }}</span>
       </div>
     </div>
 
     <!-- Current volume display -->
     <div class="volume-display">
-      <span class="vol-label">Current volume slice:</span>
+      <span class="vol-label">当前体积切片：</span>
       <span class="vol-value">{{ currentVolume }}</span>
-      <span class="vol-hint">(Auto-follow animation)</span>
+      <span class="vol-hint">（自动跟随动画）</span>
     </div>
 
     <!-- Current step description -->
     <div class="step-info" v-if="currentStepInfo">
-      <div class="step-badge">Step {{ currentStep + 1 }}</div>
+      <div class="step-badge">第 {{ currentStep + 1 }} 步</div>
       <div class="step-desc">
-        Calculate <span class="highlight-text">dp[{{ currentStepInfo.row }}][{{ currentStepInfo.col }}][{{ currentStepInfo.vol }}]</span>
+        计算 <span class="highlight-text">dp[{{ currentStepInfo.row }}][{{ currentStepInfo.col }}][{{ currentStepInfo.vol }}]</span>
         = <span class="value-text">{{ currentStepInfo.val }}</span>
         <span :class="['decision-tag', currentStepInfo.decision]">
-          {{ currentStepInfo.decision === 'take' ? '✓ Take' : '✗ Skip' }}
+          {{ currentStepInfo.decision === 'take' ? '✓ 选择' : '✗ 跳过' }}
         </span>
       </div>
       <div class="step-hint" v-if="currentStepInfo.vol !== currentVolume">
         <span class="hint-icon">💡</span>
-        Current step is at volume {{ currentStepInfo.vol }}, click to switch view
+        当前步骤在体积 {{ currentStepInfo.vol }}，点击切换视图
         <el-button size="small" @click="currentVolume = currentStepInfo.vol">
-          Switch to {{ currentStepInfo.vol }}
+          切换到 {{ currentStepInfo.vol }}
         </el-button>
       </div>
     </div>
@@ -149,17 +149,17 @@ const getItemInfo = (index) => {
           :style="{ transform: `translateZ(${(v - 1) * 8}px) translateY(${(v - 1) * -3}px)` }"
         ></div>
       </div>
-      <span class="cube-label">Volume dimension</span>
+      <span class="cube-label">体积维度</span>
     </div>
 
     <!-- DP grid (current volume slice) -->
     <div class="grid-wrapper">
       <div class="grid-title">
-        dp[i][j][<span class="vol-highlight">{{ currentVolume }}</span>] slice
+        dp[i][j][<span class="vol-highlight">{{ currentVolume }}</span>] 切片
       </div>
       
       <div class="grid-header">
-        <div class="corner-cell">Item \ Weight</div>
+        <div class="corner-cell">物品 \ 重量</div>
         <div 
           v-for="j in (data.capacity + 1)" 
           :key="j"
@@ -199,15 +199,15 @@ const getItemInfo = (index) => {
     <div class="legend">
       <div class="legend-item">
         <span class="legend-color current"></span>
-        <span>Current calculation</span>
+        <span>当前计算</span>
       </div>
       <div class="legend-item">
         <span class="legend-color without"></span>
-        <span>Without dependency</span>
+        <span>不选依赖</span>
       </div>
       <div class="legend-item">
         <span class="legend-color with"></span>
-        <span>With dependency</span>
+        <span>选择依赖</span>
       </div>
     </div>
   </div>

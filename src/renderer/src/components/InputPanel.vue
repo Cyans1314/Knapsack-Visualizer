@@ -9,88 +9,88 @@ const props = defineProps({
 
 const emit = defineEmits(['run'])
 
-// Algorithm configuration: define input fields for each algorithm
+// 算法配置：定义每种算法需要的输入字段
 const algorithmConfig = {
   knapsack_01: {
-    name: '0/1 Knapsack',
+    name: '0/1 背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:6},{w:2,v:3},{w:6,v:5},{w:5,v:4},{w:4,v:6}] },
-      { name: 'Simple', capacity: 5, items: [{w:1,v:2},{w:2,v:4},{w:3,v:4}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:6},{w:2,v:3},{w:6,v:5},{w:5,v:4},{w:4,v:6}] },
+      { name: '简单', capacity: 5, items: [{w:1,v:2},{w:2,v:4},{w:3,v:4}] }
     ]
   },
   knapsack_complete: {
-    name: 'Complete Knapsack',
+    name: '完全背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:3},{w:3,v:4},{w:4,v:5}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:3},{w:3,v:4},{w:4,v:5}] }
     ]
   },
   knapsack_multiple: {
-    name: 'Multiple Knapsack',
+    name: '多重背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value', 'count'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:3,c:3},{w:3,v:4,c:2},{w:4,v:5,c:1}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:3,c:3},{w:3,v:4,c:2},{w:4,v:5,c:1}] }
     ]
   },
   knapsack_mixed: {
-    name: 'Mixed Knapsack',
+    name: '混合背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value', 'type'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:3,t:0},{w:3,v:4,t:1},{w:4,v:5,t:2}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:3,t:0},{w:3,v:4,t:1},{w:4,v:5,t:2}] }
     ]
   },
   knapsack_2d: {
-    name: '2D Cost',
+    name: '二维费用',
     fields: ['capacity', 'capacity2', 'items'],
     itemFields: ['weight', 'volume', 'value'],
     presets: [
-      { name: 'Classic', capacity: 10, capacity2: 8, items: [{w:2,m:3,v:4},{w:3,m:2,v:5},{w:4,m:4,v:6}] }
+      { name: '经典', capacity: 10, capacity2: 8, items: [{w:2,m:3,v:4},{w:3,m:2,v:5},{w:4,m:4,v:6}] }
     ]
   },
   knapsack_group: {
-    name: 'Group Knapsack',
+    name: '分组背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value', 'group'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:3,g:1},{w:3,v:4,g:1},{w:4,v:5,g:2},{w:5,v:6,g:2}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:3,g:1},{w:3,v:4,g:1},{w:4,v:5,g:2},{w:5,v:6,g:2}] }
     ]
   },
   knapsack_depend: {
-    name: 'Dependency Knapsack',
+    name: '依赖背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value', 'parent'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:3,v:5,p:0},{w:2,v:3,p:1},{w:1,v:2,p:1},{w:4,v:6,p:0}] }
+      { name: '经典', capacity: 10, items: [{w:3,v:5,p:0},{w:2,v:3,p:1},{w:1,v:2,p:1},{w:4,v:6,p:0}] }
     ]
   },
   knapsack_tree: {
-    name: 'Tree Knapsack',
+    name: '树形背包',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value', 'parent'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:3,p:0},{w:3,v:4,p:1},{w:2,v:2,p:1},{w:4,v:5,p:0},{w:2,v:3,p:4}] },
-      { name: 'Simple', capacity: 8, items: [{w:2,v:4,p:0},{w:3,v:5,p:1},{w:2,v:3,p:1}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:3,p:0},{w:3,v:4,p:1},{w:2,v:2,p:1},{w:4,v:5,p:0},{w:2,v:3,p:4}] },
+      { name: '简单', capacity: 8, items: [{w:2,v:4,p:0},{w:3,v:5,p:1},{w:2,v:3,p:1}] }
     ]
   },
   knapsack_kth: {
-    name: 'Kth Optimal',
+    name: '第K优解',
     fields: ['capacity', 'k', 'items'],
     itemFields: ['weight', 'value'],
     presets: [
-      { name: 'Classic', capacity: 10, k: 3, items: [{w:2,v:3},{w:3,v:4},{w:4,v:5}] }
+      { name: '经典', capacity: 10, k: 3, items: [{w:2,v:3},{w:3,v:4},{w:4,v:5}] }
     ]
   },
   knapsack_count: {
-    name: 'Scheme Counting',
+    name: '方案计数',
     fields: ['capacity', 'items'],
     itemFields: ['weight', 'value'],
     presets: [
-      { name: 'Classic', capacity: 10, items: [{w:2,v:3},{w:3,v:4},{w:4,v:5}] }
+      { name: '经典', capacity: 10, items: [{w:2,v:3},{w:3,v:4},{w:4,v:5}] }
     ]
   }
 }
@@ -106,9 +106,9 @@ const items = ref([])
 
 // Item type options (for mixed knapsack)
 const typeOptions = [
-  { value: 0, label: '0/1' },
-  { value: 1, label: 'Complete' },
-  { value: 2, label: 'Multiple' }
+  { value: 0, label: '0/1背包' },
+  { value: 1, label: '完全背包' },
+  { value: 2, label: '多重背包' }
 ]
 
 // Initialize items list
@@ -229,10 +229,10 @@ const getFieldLabel = (field) => {
     weight: 'w',
     value: 'v',
     count: 'n',
-    type: 'Type',
+    type: '类型',
     volume: 'm',
-    group: 'Group',
-    parent: 'Main'
+    group: '组',
+    parent: '主件'
   }
   return labels[field] || field
 }
@@ -244,7 +244,7 @@ const getFieldLabel = (field) => {
       <h3>📝 {{ currentConfig.name }}</h3>
     </div>
 
-    <!-- Preset cases -->
+    <!-- 预设案例 -->
     <div class="preset-section">
       <div class="preset-buttons">
         <button 
@@ -255,32 +255,32 @@ const getFieldLabel = (field) => {
         >
           {{ preset.name }}
         </button>
-        <button class="preset-btn random" @click="randomGenerate">🎲 Random</button>
+        <button class="preset-btn random" @click="randomGenerate">🎲 随机</button>
       </div>
     </div>
 
-    <!-- Knapsack capacity -->
+    <!-- 背包容量 -->
     <div class="form-item">
-      <label>Knapsack capacity (C)</label>
+      <label>背包容量 (C)</label>
       <el-input-number v-model="capacity" :min="1" :max="50" size="default" />
     </div>
 
-    <!-- 2D cost: second capacity -->
+    <!-- 二维费用：第二个容量 -->
     <div class="form-item" v-if="currentConfig.fields.includes('capacity2')">
-      <label>Volume limit (M)</label>
+      <label>体积限制 (M)</label>
       <el-input-number v-model="capacity2" :min="1" :max="50" size="default" />
     </div>
 
-    <!-- Kth optimal: K value -->
+    <!-- 第K优解：K值 -->
     <div class="form-item" v-if="currentConfig.fields.includes('k')">
-      <label>Find Kth optimal solution</label>
+      <label>求第 K 优解</label>
       <el-input-number v-model="k" :min="1" :max="10" size="default" />
     </div>
 
-    <!-- Item list -->
+    <!-- 物品列表 -->
     <div class="form-item">
       <div class="item-header">
-        <label>Item list</label>
+        <label>物品列表</label>
         <el-button type="primary" :icon="Plus" circle size="small" @click="addItem" />
       </div>
       
@@ -305,7 +305,7 @@ const getFieldLabel = (field) => {
           >
             <span class="col-index">{{ index + 1 }}</span>
             
-            <!-- Weight -->
+            <!-- 重量 -->
             <el-input 
               v-if="currentConfig.itemFields.includes('weight')"
               v-model.number="item.weight" 
@@ -314,7 +314,7 @@ const getFieldLabel = (field) => {
               class="col-field"
             />
             
-            <!-- Volume (2D cost) -->
+            <!-- 体积（二维费用） -->
             <el-input 
               v-if="currentConfig.itemFields.includes('volume')"
               v-model.number="item.volume" 
@@ -323,7 +323,7 @@ const getFieldLabel = (field) => {
               class="col-field"
             />
             
-            <!-- Value -->
+            <!-- 价值 -->
             <el-input 
               v-if="currentConfig.itemFields.includes('value')"
               v-model.number="item.value" 
@@ -332,7 +332,7 @@ const getFieldLabel = (field) => {
               class="col-field"
             />
             
-            <!-- Count (multiple knapsack) -->
+            <!-- 数量（多重背包） -->
             <el-input 
               v-if="currentConfig.itemFields.includes('count')"
               v-model.number="item.count" 
@@ -341,7 +341,7 @@ const getFieldLabel = (field) => {
               class="col-field"
             />
             
-            <!-- Type (mixed knapsack) -->
+            <!-- 类型（混合背包） -->
             <el-select 
               v-if="currentConfig.itemFields.includes('type')"
               v-model="item.type" 
@@ -356,7 +356,7 @@ const getFieldLabel = (field) => {
               />
             </el-select>
             
-            <!-- Group number (group knapsack) -->
+            <!-- 组号（分组背包） -->
             <el-input 
               v-if="currentConfig.itemFields.includes('group')"
               v-model.number="item.group" 
@@ -365,7 +365,7 @@ const getFieldLabel = (field) => {
               class="col-field"
             />
             
-            <!-- Main item ID (dependency knapsack) -->
+            <!-- 主件ID（依赖背包） -->
             <el-input 
               v-if="currentConfig.itemFields.includes('parent')"
               v-model.number="item.parent" 
@@ -387,7 +387,7 @@ const getFieldLabel = (field) => {
       </div>
     </div>
 
-    <!-- Run button -->
+    <!-- 运行按钮 -->
     <el-button 
       type="primary" 
       size="large" 
@@ -397,7 +397,7 @@ const getFieldLabel = (field) => {
       class="run-button"
       @click="handleRun"
     >
-      {{ isRunning ? 'Computing...' : 'Start Demo' }}
+      {{ isRunning ? '计算中...' : '开始演示' }}
     </el-button>
   </div>
 </template>

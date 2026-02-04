@@ -78,16 +78,16 @@ const currentValue = computed(() => currentStepInfo.value?.val || 0)
     <!-- Top information -->
     <div class="info-bar">
       <div class="info-item">
-        <span class="label">Current capacity:</span>
+        <span class="label">当前容量：</span>
         <span class="value">{{ currentCapacity }}</span>
       </div>
       <div class="info-item">
-        <span class="label">Current optimal:</span>
+        <span class="label">当前最优值：</span>
         <span class="value highlight">{{ currentValue }}</span>
       </div>
       <div class="info-item" v-if="currentStepInfo">
-        <span class="label">Processing group:</span>
-        <span class="value group-badge">Group {{ currentStepInfo.groupId }}</span>
+        <span class="label">处理分组：</span>
+        <span class="value group-badge">分组 {{ currentStepInfo.groupId }}</span>
       </div>
     </div>
 
@@ -97,7 +97,7 @@ const currentValue = computed(() => currentStepInfo.value?.val || 0)
       <g class="backpack-center">
         <circle cx="300" cy="250" r="60" class="backpack-circle" />
         <text x="300" y="240" class="backpack-icon">🎒</text>
-        <text x="300" y="270" class="backpack-text">Capacity: {{ data.capacity }}</text>
+        <text x="300" y="270" class="backpack-text">容量: {{ data.capacity }}</text>
       </g>
 
       <!-- Connection lines -->
@@ -133,7 +133,7 @@ const currentValue = computed(() => currentStepInfo.value?.val || 0)
           :y="getGroupPosition(gIdx, groups.length).y - 65"
           class="group-label"
         >
-          Group {{ group.id }}
+          分组 {{ group.id }}
         </text>
 
         <!-- Items in group -->
@@ -168,19 +168,19 @@ const currentValue = computed(() => currentStepInfo.value?.val || 0)
 
     <!-- Current attempt information -->
     <div class="try-info" v-if="currentStepInfo?.tryItems">
-      <div class="try-title">Group item attempt:</div>
+      <div class="try-title">分组物品尝试：</div>
       <div class="try-list">
         <div 
           v-for="item in currentStepInfo.tryItems"
           :key="item.itemIdx"
           :class="['try-item', { best: currentStepInfo.bestChoice === item.itemIdx }]"
         >
-          <span class="item-id">Item{{ item.itemIdx + 1 }}</span>
+          <span class="item-id">物品{{ item.itemIdx + 1 }}</span>
           <span class="item-detail">w={{ item.w }}, v={{ item.v }}</span>
           <span class="item-result" v-if="item.canTake">
             → {{ item.newVal }}
           </span>
-          <span class="item-result cannot" v-else>Overweight</span>
+          <span class="item-result cannot" v-else>超重</span>
         </div>
       </div>
     </div>
@@ -189,19 +189,19 @@ const currentValue = computed(() => currentStepInfo.value?.val || 0)
     <div class="legend">
       <div class="legend-item">
         <span class="legend-dot active"></span>
-        <span>Current processing</span>
+        <span>当前处理</span>
       </div>
       <div class="legend-item">
         <span class="legend-dot trying"></span>
-        <span>Trying</span>
+        <span>尝试中</span>
       </div>
       <div class="legend-item">
         <span class="legend-dot best"></span>
-        <span>Best choice</span>
+        <span>最优选择</span>
       </div>
       <div class="legend-item">
         <span class="legend-dot selected"></span>
-        <span>Selected</span>
+        <span>已选择</span>
       </div>
     </div>
   </div>

@@ -116,15 +116,15 @@ const currentDPValues = computed(() => {
     <!-- Top information -->
     <div class="info-bar">
       <div class="info-item">
-        <span class="label">Knapsack capacity:</span>
+        <span class="label">背包容量：</span>
         <span class="value">{{ data.capacity }}</span>
       </div>
       <div class="info-item" v-if="currentStepInfo">
-        <span class="label">Current node:</span>
-        <span class="value highlight">Node {{ currentStepInfo.node + 1 }}</span>
+        <span class="label">当前节点：</span>
+        <span class="value highlight">节点 {{ currentStepInfo.node + 1 }}</span>
       </div>
       <div class="info-item" v-if="currentStepInfo">
-        <span class="label">Current value:</span>
+        <span class="label">当前值：</span>
         <span class="value gold">{{ currentStepInfo.val }}</span>
       </div>
     </div>
@@ -169,7 +169,7 @@ const currentDPValues = computed(() => {
 
     <!-- DP values display -->
     <div class="dp-values" v-if="currentDPValues">
-      <div class="dp-title">Node {{ currentStepInfo.node + 1 }} DP values:</div>
+      <div class="dp-title">节点 {{ currentStepInfo.node + 1 }} DP值：</div>
       <div class="dp-array">
         <div 
           v-for="(val, idx) in currentDPValues.slice(0, Math.min(currentDPValues.length, 15))"
@@ -187,10 +187,10 @@ const currentDPValues = computed(() => {
     <div class="decision-info" v-if="currentStepInfo">
       <div class="decision-text">
         <span v-if="currentStepInfo.decision === 'take'" class="take">
-          ✓ Take node {{ currentStepInfo.node + 1 }}
+          ✓ 选择节点 {{ currentStepInfo.node + 1 }}
         </span>
         <span v-else class="skip">
-          ✗ Skip node {{ currentStepInfo.node + 1 }}
+          ✗ 跳过节点 {{ currentStepInfo.node + 1 }}
         </span>
       </div>
       <div class="formula" v-if="currentStepInfo.formula">
@@ -202,15 +202,15 @@ const currentDPValues = computed(() => {
     <div class="legend">
       <div class="legend-item">
         <span class="legend-dot current"></span>
-        <span>Current processing</span>
+        <span>当前处理</span>
       </div>
       <div class="legend-item">
         <span class="legend-dot highlight"></span>
-        <span>Dependency node</span>
+        <span>依赖节点</span>
       </div>
       <div class="legend-item">
         <span class="legend-dot selected"></span>
-        <span>Selected</span>
+        <span>已选择</span>
       </div>
     </div>
   </div>

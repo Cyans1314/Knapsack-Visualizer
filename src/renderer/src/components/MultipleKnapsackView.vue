@@ -98,16 +98,16 @@ const getItemColor = (origIndex) => {
     <!-- Split preview area -->
     <div class="split-preview">
       <div class="split-header">
-        <span class="split-title">🔀 Binary Split</span>
+        <span class="split-title">🔀 二进制拆分</span>
         <span class="split-summary">
-          {{ originalItems.length }} items → {{ splitItems.length }} sub-items
+          {{ originalItems.length }} 个物品 → {{ splitItems.length }} 个子物品
         </span>
       </div>
       
       <div class="split-container">
         <!-- Original items -->
         <div class="original-items">
-          <div class="section-label">Original items</div>
+          <div class="section-label">原始物品</div>
           <div 
             v-for="(item, idx) in originalItems"
             :key="'orig-' + idx"
@@ -128,7 +128,7 @@ const getItemColor = (origIndex) => {
 
         <!-- Split items -->
         <div class="split-items">
-          <div class="section-label">Split result</div>
+          <div class="section-label">拆分结果</div>
           <div class="split-groups">
             <div 
               v-for="(item, idx) in splitItems"
@@ -151,16 +151,16 @@ const getItemColor = (origIndex) => {
 
     <!-- Current step description -->
     <div class="step-info" v-if="currentStepInfo">
-      <div class="step-badge">Step {{ currentStep + 1 }}</div>
+      <div class="step-badge">第 {{ currentStep + 1 }} 步</div>
       <div class="step-desc">
-        Process sub-item 
+        处理子物品 
         <span class="highlight-text" :style="{ color: getItemColor(splitItems[currentStepInfo.row - 1]?.orig) }">
           {{ splitItems[currentStepInfo.row - 1]?.orig + 1 }}-{{ splitItems[currentStepInfo.row - 1]?.cnt }}
         </span>
-        capacity <span class="highlight-text">{{ currentStepInfo.col }}</span>
+        容量 <span class="highlight-text">{{ currentStepInfo.col }}</span>
         = <span class="value-text">{{ currentStepInfo.val }}</span>
         <span :class="['decision-tag', currentStepInfo.decision]">
-          {{ currentStepInfo.decision === 'take' ? '✓ Take' : '✗ Skip' }}
+          {{ currentStepInfo.decision === 'take' ? '✓ 选择' : '✗ 跳过' }}
         </span>
       </div>
     </div>
@@ -168,7 +168,7 @@ const getItemColor = (origIndex) => {
     <!-- DP grid -->
     <div class="grid-wrapper">
       <div class="grid-header">
-        <div class="corner-cell">Sub-item \ Capacity</div>
+        <div class="corner-cell">子物品 \ 容量</div>
         <div 
           v-for="j in (data.capacity + 1)" 
           :key="j"
@@ -190,7 +190,7 @@ const getItemColor = (origIndex) => {
           >
             <template v-if="i === 0">
               <div class="row-index">0</div>
-              <div class="item-info">Initial</div>
+              <div class="item-info">初始</div>
             </template>
             <template v-else>
               <div class="row-index" :style="{ color: getItemColor(splitItems[i-1]?.orig) }">
@@ -219,19 +219,19 @@ const getItemColor = (origIndex) => {
     <div class="legend">
       <div class="legend-item">
         <span class="legend-color current"></span>
-        <span>Current calculation</span>
+        <span>当前计算</span>
       </div>
       <div class="legend-item">
         <span class="legend-color without"></span>
-        <span>Without dependency</span>
+        <span>不选依赖</span>
       </div>
       <div class="legend-item">
         <span class="legend-color with"></span>
-        <span>With dependency</span>
+        <span>选择依赖</span>
       </div>
       <div class="legend-item" v-if="data.path?.length > 0">
         <span class="legend-color path"></span>
-        <span>Optimal path</span>
+        <span>最优路径</span>
       </div>
     </div>
   </div>

@@ -115,7 +115,7 @@ const getPackageColor = (pkgIdx) => {
     <!-- Dependency relationship preview -->
     <div class="dependency-preview">
       <div class="preview-header">
-        <span class="preview-title">🔗 Main-Attachment Relationship</span>
+        <span class="preview-title">🔗 主-附属关系</span>
       </div>
       
       <div class="dependency-groups">
@@ -126,7 +126,7 @@ const getPackageColor = (pkgIdx) => {
         >
           <!-- Main item -->
           <div class="main-item">
-            <span class="item-badge main">Main{{ main.idx + 1 }}</span>
+            <span class="item-badge main">主物品{{ main.idx + 1 }}</span>
             <span class="item-detail">w={{ main.w }}, v={{ main.v }}</span>
           </div>
           
@@ -139,7 +139,7 @@ const getPackageColor = (pkgIdx) => {
                 :key="'att-' + att.idx"
                 class="attach-item"
               >
-                <span class="item-badge attach">Attach{{ att.idx + 1 }}</span>
+                <span class="item-badge attach">附属物品{{ att.idx + 1 }}</span>
                 <span class="item-detail">w={{ att.w }}, v={{ att.v }}</span>
               </div>
             </div>
@@ -151,8 +151,8 @@ const getPackageColor = (pkgIdx) => {
     <!-- Package combination preview -->
     <div class="package-preview">
       <div class="preview-header">
-        <span class="preview-title">📦 Package Combinations</span>
-        <span class="preview-summary">Total {{ packages.length }} combinations</span>
+        <span class="preview-title">📦 套餐组合</span>
+        <span class="preview-summary">共 {{ packages.length }} 个组合</span>
       </div>
       
       <div class="package-list">
@@ -171,16 +171,16 @@ const getPackageColor = (pkgIdx) => {
 
     <!-- Current step description -->
     <div class="step-info" v-if="currentStepInfo">
-      <div class="step-badge">Step {{ currentStep + 1 }}</div>
+      <div class="step-badge">第 {{ currentStep + 1 }} 步</div>
       <div class="step-desc">
-        Process package 
+        处理套餐 
         <span class="highlight-text" :style="{ color: getPackageColor(currentStepInfo.row - 1) }">
           {{ currentStepInfo.package }}
         </span>
-        capacity <span class="highlight-text">{{ currentStepInfo.col }}</span>
+        容量 <span class="highlight-text">{{ currentStepInfo.col }}</span>
         = <span class="value-text">{{ currentStepInfo.val }}</span>
         <span :class="['decision-tag', currentStepInfo.decision]">
-          {{ currentStepInfo.decision === 'take' ? '✓ Select' : '✗ Skip' }}
+          {{ currentStepInfo.decision === 'take' ? '✓ 选择' : '✗ 跳过' }}
         </span>
       </div>
     </div>
@@ -188,7 +188,7 @@ const getPackageColor = (pkgIdx) => {
     <!-- DP grid -->
     <div class="grid-wrapper">
       <div class="grid-header">
-        <div class="corner-cell">Package \ Capacity</div>
+        <div class="corner-cell">套餐\容量</div>
         <div 
           v-for="j in (data.capacity + 1)" 
           :key="j"
@@ -210,7 +210,7 @@ const getPackageColor = (pkgIdx) => {
           >
             <template v-if="i === 0">
               <div class="row-index">0</div>
-              <div class="pkg-info">Initial</div>
+              <div class="pkg-info">初始</div>
             </template>
             <template v-else>
               <div class="row-index" :style="{ color: getPackageColor(i - 1) }">{{ i }}</div>
@@ -238,19 +238,19 @@ const getPackageColor = (pkgIdx) => {
     <div class="legend">
       <div class="legend-item">
         <span class="legend-color current"></span>
-        <span>Current calculation</span>
+        <span>当前计算</span>
       </div>
       <div class="legend-item">
         <span class="legend-color without"></span>
-        <span>Without dependency</span>
+        <span>不选依赖</span>
       </div>
       <div class="legend-item">
         <span class="legend-color with"></span>
-        <span>With dependency</span>
+        <span>选择依赖</span>
       </div>
       <div class="legend-item" v-if="data.path?.length > 0">
         <span class="legend-color path"></span>
-        <span>Optimal path</span>
+        <span>最优路径</span>
       </div>
     </div>
   </div>

@@ -51,21 +51,21 @@ const handleSliderChange = (value) => {
         circle 
         :disabled="disabled"
         @click="$emit('reset')"
-        title="Reset"
+        title="重置"
       />
       <el-button 
         :icon="Delete" 
         circle 
         :disabled="disabled"
         @click="$emit('clear')"
-        title="Clear"
+        title="清空"
       />
       <el-button 
         :icon="DArrowLeft" 
         circle 
         :disabled="disabled || currentStep <= 0"
         @click="$emit('step-backward')"
-        title="Previous step"
+        title="上一步"
       />
       <el-button 
         v-if="!isPlaying"
@@ -75,7 +75,7 @@ const handleSliderChange = (value) => {
         size="large"
         :disabled="disabled || currentStep >= totalSteps - 1"
         @click="$emit('play')"
-        title="Play"
+        title="播放"
       />
       <el-button 
         v-else
@@ -84,14 +84,14 @@ const handleSliderChange = (value) => {
         circle 
         size="large"
         @click="$emit('pause')"
-        title="Pause"
+        title="暂停"
       />
       <el-button 
         :icon="DArrowRight" 
         circle 
         :disabled="disabled || currentStep >= totalSteps - 1"
         @click="$emit('step-forward')"
-        title="Next step"
+        title="下一步"
       />
     </div>
 
@@ -110,7 +110,7 @@ const handleSliderChange = (value) => {
 
     <!-- Speed control -->
     <div class="speed-section">
-      <span class="speed-label">Speed:</span>
+      <span class="speed-label">速度：</span>
       <div class="speed-buttons">
         <button 
           v-for="s in speedOptions" 

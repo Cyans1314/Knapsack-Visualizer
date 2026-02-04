@@ -18,15 +18,15 @@ import DependencyView from './components/DependencyView.vue'
 import ControlBar from './components/ControlBar.vue'
 import InfoPanel from './components/InfoPanel.vue'
 
-// Current selected algorithm
+// 当前选择的算法
 const currentAlgorithm = ref('knapsack_01')
 
-// Watch algorithm change, clear demo
+// 监听算法切换，清空演示
 watch(currentAlgorithm, () => {
   handleClear()
 })
 
-// Algorithm list
+// 算法列表
 const algorithms = [
   { value: 'knapsack_01', label: '0/1 背包', badge: '经典', desc: '每个物品只能选一次' },
   { value: 'knapsack_complete', label: '完全背包', badge: '无限', desc: '每个物品可以选无限次' },
@@ -40,12 +40,12 @@ const algorithms = [
   { value: 'knapsack_count', label: '方案计数', badge: '计数', desc: '统计恰好装满的方案总数' }
 ]
 
-// Current algorithm description
+// 当前算法的说明
 const currentAlgoInfo = computed(() => {
   return algorithms.find(a => a.value === currentAlgorithm.value)
 })
 
-// Determine which view component to use
+// 判断使用哪种视图组件
 const viewType = computed(() => {
   if (currentAlgorithm.value === 'knapsack_group') return 'circle'
   if (currentAlgorithm.value === 'knapsack_tree') return 'tree'
@@ -55,46 +55,46 @@ const viewType = computed(() => {
   return 'grid'
 })
 
-// Algorithm data
+// 算法数据
 const algorithmData = ref(null)
 const isRunning = ref(false)
 const currentStep = ref(-1)
 const isPlaying = ref(false)
 const playSpeed = ref(1)
 
-// Whether demo is complete
+// 是否演示完成
 const isFinished = computed(() => {
   if (!algorithmData.value) return false
   return currentStep.value >= algorithmData.value.steps.length - 1
 })
 
-// Run algorithm
+// 运行算法
 const handleRun = async (params) => {
   isRunning.value = true
   currentStep.value = -1
   algorithmData.value = null
-  handlePause() // Stop previous playback first
+  handlePause() // 先停止之前的播放
   
   try {
     const result = await window.api.runAlgorithm(currentAlgorithm.value, params)
     if (result.success) {
       algorithmData.value = result.data
       currentStep.value = 0
-      // Auto start playback
+      // 自动开始播放
       setTimeout(() => {
         handlePlay()
       }, 300)
     } else {
-      console.error('Algorithm execution failed:', result.error)
+      console.error('算法执行失败:', result.error)
     }
   } catch (error) {
-    console.error('Call failed:', error)
+    console.error('调用失败:', error)
   } finally {
     isRunning.value = false
   }
 }
 
-// Playback control
+// 播放控制
 let playTimer = null
 
 const handlePlay = () => {
@@ -140,7 +140,7 @@ const handleReset = () => {
   currentStep.value = 0
 }
 
-// Clear demo
+// 清空演示
 const handleClear = () => {
   handlePause()
   algorithmData.value = null
@@ -158,7 +158,7 @@ const handleStepChange = (step) => {
 
 <template>
   <div class="app-container">
-    <!-- Top title bar -->
+    <!-- 顶部标题栏 -->
     <header class="app-header">
       <div class="header-left">
         <h1 class="title">
@@ -167,9 +167,9 @@ const handleStepChange = (step) => {
         </h1>
       </div>
       
-      <!-- Algorithm selector -->
+      <!-- 算法选择器 -->
       <div class="algorithm-selector">
-        <span class="selector-label">Select algorithm:</span>
+        <span class="selector-label">选择算法:</span>
         <el-select v-model="currentAlgorithm" size="large" class="algo-select">
           <el-option
             v-for="algo in algorithms"
@@ -183,7 +183,7 @@ const handleStepChange = (step) => {
             </div>
           </el-option>
         </el-select>
-        <!-- Algorithm description -->
+        <!-- 算法描述 -->
         <div class="algo-desc" v-if="currentAlgoInfo">
           <span class="desc-icon">💡</span>
           {{ currentAlgoInfo.desc }}
@@ -191,9 +191,9 @@ const handleStepChange = (step) => {
       </div>
     </header>
 
-    <!-- Main content area -->
+    <!-- 主内容区 -->
     <main class="app-main">
-      <!-- Left: input panel -->
+      <!-- 左侧：输入面板 -->
       <aside class="left-panel">
         <InputPanel 
           :is-running="isRunning"
@@ -202,39 +202,39 @@ const handleStepChange = (step) => {
         />
       </aside>
 
-      <!-- Center: visualization area -->
+      <!-- 中间：可视化区域 -->
       <section class="center-panel">
-        <!-- Group knapsack: circle view -->
+        <!-- 分组背包：圆环视图 -->
         <GroupCircleView 
           v-if="algorithmData && viewType === 'circle'"
           :data="algorithmData"
           :current-step="currentStep"
         />
-        <!-- Tree knapsack: tree view -->
+        <!-- 树形背包：树形视图 -->
         <TreeView 
           v-else-if="algorithmData && viewType === 'tree'"
           :data="algorithmData"
           :current-step="currentStep"
         />
-        <!-- Multiple knapsack: split view -->
+        <!-- 多重背包：拆分视图 -->
         <MultipleKnapsackView 
           v-else-if="algorithmData && viewType === 'multiple'"
           :data="algorithmData"
           :current-step="currentStep"
         />
-        <!-- 2D cost: slider view -->
+        <!-- 二维费用：滑块视图 -->
         <TwoDimensionView 
           v-else-if="algorithmData && viewType === '2d'"
           :data="algorithmData"
           :current-step="currentStep"
         />
-        <!-- Dependency knapsack: package view -->
+        <!-- 依赖背包：套餐视图 -->
         <DependencyView 
           v-else-if="algorithmData && viewType === 'depend'"
           :data="algorithmData"
           :current-step="currentStep"
         />
-        <!-- Other algorithms: grid view -->
+        <!-- 其他算法：网格视图 -->
         <DPGrid 
           v-else-if="algorithmData"
           :data="algorithmData"
@@ -243,11 +243,11 @@ const handleStepChange = (step) => {
         />
         <div v-else class="empty-state">
           <div class="empty-icon">🎯</div>
-          <p>Enter parameters and click "Start Demo"</p>
+          <p>输入参数并点击"开始演示"</p>
         </div>
       </section>
 
-      <!-- Right: result panel (show after demo complete) -->
+      <!-- 右侧：结果面板（演示完成后显示） -->
       <aside class="right-panel" v-if="algorithmData">
         <InfoPanel 
           :data="algorithmData"
@@ -257,7 +257,7 @@ const handleStepChange = (step) => {
       </aside>
     </main>
 
-    <!-- Bottom control bar -->
+    <!-- 底部控制栏 -->
     <footer class="app-footer">
       <ControlBar
         :is-playing="isPlaying"

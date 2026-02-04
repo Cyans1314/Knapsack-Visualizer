@@ -42,9 +42,9 @@ const isKthType = computed(() => props.data?.type === '第K优解')
 
 // Result label
 const resultLabel = computed(() => {
-  if (isCountType.value) return 'Total schemes'
-  if (isKthType.value) return `${props.data.k}th optimal`
-  return 'Max value'
+  if (isCountType.value) return '总方案数'
+  if (isKthType.value) return `第${props.data.k}优解`
+  return '最大价值'
 })
 
 // Total weight and value
@@ -65,39 +65,39 @@ const progressPercent = computed(() => {
 
 <template>
   <div class="info-panel" v-if="data">
-    <!-- Demo progress -->
+    <!-- 演示进度 -->
     <div class="info-section">
-      <h4>📍 Demo Progress</h4>
+      <h4>📍 演示进度</h4>
       <div class="progress-info">
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: progressPercent + '%' }"></div>
         </div>
         <div class="progress-text">
           <span>Step {{ currentStep + 1 }}</span>
-          <span v-if="isFinished">Total {{ data.steps.length }} steps</span>
-          <span v-else>In progress...</span>
+          <span v-if="isFinished">共 {{ data.steps.length }} 步</span>
+          <span v-else>进行中...</span>
         </div>
       </div>
     </div>
 
     <!-- Complexity information (always show) -->
     <div class="info-section">
-      <h4>⚡ Complexity Analysis</h4>
+      <h4>⚡ 复杂度分析</h4>
       <div class="complexity-grid">
         <div class="complexity-item">
-          <span class="label">Time complexity</span>
+          <span class="label">时间复杂度</span>
           <span class="formula">{{ data.complexity?.time }}</span>
         </div>
         <div class="complexity-item">
-          <span class="label">Space complexity</span>
+          <span class="label">空间复杂度</span>
           <span class="formula">{{ data.complexity?.space }}</span>
         </div>
         <div class="complexity-item">
-          <span class="label">Operations</span>
+          <span class="label">操作次数</span>
           <span class="actual">{{ data.complexity?.operations }}</span>
         </div>
         <div class="complexity-item">
-          <span class="label">Memory usage</span>
+          <span class="label">内存占用</span>
           <span class="actual">{{ formatBytes(data.complexity?.memory_bytes) }}</span>
         </div>
       </div>
@@ -106,21 +106,21 @@ const progressPercent = computed(() => {
     <!-- Calculation result (show after demo complete) -->
     <Transition name="fade">
       <div class="info-section result-section" v-if="isFinished">
-        <h4>🏆 Calculation Result</h4>
+        <h4>🏆 计算结果</h4>
         <div class="result-grid">
           <div class="result-item main-result">
             <span class="label">{{ resultLabel }}</span>
             <span class="value gold">{{ isKthType ? data.kth_value : data.max_value }}</span>
           </div>
           <div class="result-item">
-            <span class="label">Execution time</span>
+            <span class="label">执行时间</span>
             <span class="value">{{ data.time_ms?.toFixed(2) }} ms</span>
           </div>
         </div>
         
         <!-- Kth optimal solution: show top K values -->
         <div class="topk-list" v-if="isKthType && data.topK">
-          <div class="topk-title">Top {{ data.k }} optimal solutions:</div>
+          <div class="topk-title">前 {{ data.k }} 个最优解：</div>
           <div class="topk-values">
             <span 
               v-for="(v, idx) in data.topK" 
@@ -137,7 +137,7 @@ const progressPercent = computed(() => {
     <!-- Optimal scheme (show after demo complete, except scheme counting) -->
     <Transition name="fade">
       <div class="info-section" v-if="isFinished && selectedItems.length > 0 && !isCountType">
-        <h4>🎒 Optimal Scheme</h4>
+        <h4>🎒 最优方案</h4>
         <div class="selected-items">
           <div 
             v-for="(item, idx) in selectedItems" 
@@ -145,14 +145,14 @@ const progressPercent = computed(() => {
             class="selected-item"
           >
             <span class="item-badge" v-if="item.package">{{ item.package }}</span>
-            <span class="item-badge" v-else-if="item.group">Group{{ item.group }}-Item{{ item.index }}</span>
-            <span class="item-badge" v-else>Item {{ item.index }}</span>
+            <span class="item-badge" v-else-if="item.group">分组{{ item.group }}-物品{{ item.index }}</span>
+            <span class="item-badge" v-else>物品 {{ item.index }}</span>
             <span class="item-detail">w={{ item.weight }}, v={{ item.value }}</span>
           </div>
         </div>
         <div class="summary">
-          <span>Total weight: <strong>{{ totalWeight }}</strong> / {{ data.capacity }}</span>
-          <span>Total value: <strong class="gold">{{ totalValue }}</strong></span>
+          <span>总重量: <strong>{{ totalWeight }}</strong> / {{ data.capacity }}</span>
+          <span>总价值: <strong class="gold">{{ totalValue }}</strong></span>
         </div>
       </div>
     </Transition>
@@ -160,7 +160,7 @@ const progressPercent = computed(() => {
     <!-- Demo in progress hint -->
     <div class="info-section waiting" v-if="!isFinished">
       <div class="waiting-icon">⏳</div>
-      <p>Demo in progress, results will show after completion...</p>
+      <p>演示进行中，完成后显示结果...</p>
     </div>
   </div>
 </template>

@@ -116,7 +116,7 @@ const getRowInfo = (index) => {
     const item = props.data.splitItems[index - 1]
     return { 
       label: `${index}`, 
-      desc: `Item${item.orig + 1}×${item.cnt}`,
+      desc: `物品${item.orig + 1}×${item.cnt}`,
       extra: `w=${item.w}, v=${item.v}`,
       type: null
     }
@@ -125,8 +125,8 @@ const getRowInfo = (index) => {
   if (isGroupType.value && props.data.groups) {
     const group = props.data.groups[index - 1]
     return { 
-      label: `Group${group.id}`, 
-      desc: `${group.items.length} items`,
+      label: `分组${group.id}`, 
+      desc: `${group.items.length} 个物品`,
       type: null
     }
   }
@@ -135,12 +135,12 @@ const getRowInfo = (index) => {
   
   // Mixed knapsack: return type info for color change
   if (isMixedType.value) {
-    const typeNames = ['0/1', 'Complete', 'Multiple']
+    const typeNames = ['0/1背包', '完全背包', '多重背包']
     return { 
       label: `${index}`, 
       desc: `w=${item.w}, v=${item.v}`,
       type: item.t,
-      typeName: typeNames[item.t] || 'Unknown'
+      typeName: typeNames[item.t] || '未知'
     }
   }
   
@@ -184,18 +184,18 @@ const getDecisionText = (step) => {
   }
   
   if (isKthType.value) {
-    return 'Merge sort'
+    return '合并排序'
   }
   
   if (isGroupType.value && step.bestChoice >= 0) {
-    return `Select item${step.bestChoice + 1}`
+    return `选择物品${step.bestChoice + 1}`
   }
   
   if (isMixedType.value && step.typeStr) {
-    return `[${step.typeStr}] ${step.decision === 'take' ? '✓ Select' : '✗ Skip'}`
+    return `[${step.typeStr}] ${step.decision === 'take' ? '✓ 选择' : '✗ 跳过'}`
   }
   
-  return step.decision === 'take' ? '✓ Select' : '✗ Skip'
+  return step.decision === 'take' ? '✓ 选择' : '✗ 跳过'
 }
 
 // Get decision style
@@ -208,15 +208,15 @@ const getDecisionClass = (step) => {
 
 <template>
   <div class="dp-grid-container" v-if="data">
-    <!-- Current step description -->
+    <!-- 当前步骤说明 -->
     <div class="step-info" v-if="currentStepInfo">
-      <div class="step-badge">Step {{ currentStep + 1 }}</div>
+      <div class="step-badge">第 {{ currentStep + 1 }} 步</div>
       <div class="step-desc">
         <span v-if="isGroupType">
-          Calculate <span class="highlight-text">Group{{ currentStepInfo.groupId }}</span> capacity <span class="highlight-text">{{ currentStepInfo.col }}</span>
+          计算 <span class="highlight-text">组{{ currentStepInfo.groupId }}</span> 容量 <span class="highlight-text">{{ currentStepInfo.col }}</span>
         </span>
         <span v-else>
-          Calculate <span class="highlight-text">dp[{{ currentStepInfo.row }}][{{ currentStepInfo.col }}]</span>
+          计算 <span class="highlight-text">dp[{{ currentStepInfo.row }}][{{ currentStepInfo.col }}]</span>
         </span>
         = <span class="value-text">{{ currentStepInfo.val }}</span>
         <span class="decision-tag" :class="getDecisionClass(currentStepInfo)">
@@ -227,20 +227,20 @@ const getDecisionClass = (step) => {
 
     <!-- Multiple knapsack: display split information -->
     <div class="split-info" v-if="isMultipleType && data.splitItems">
-      <span class="split-label">Binary split:</span>
-      <span class="split-count">{{ data.items.length }} items → {{ data.splitItems.length }} sub-items</span>
+      <span class="split-label">二进制拆分：</span>
+      <span class="split-count">{{ data.items.length }} 个物品 → {{ data.splitItems.length }} 个子物品</span>
     </div>
 
     <!-- Group knapsack: display group attempt -->
     <div class="group-try-info" v-if="isGroupType && currentStepInfo?.tryItems">
-      <span class="try-label">Group attempt:</span>
+      <span class="try-label">分组尝试：</span>
       <div class="try-items">
         <span 
           v-for="(item, idx) in currentStepInfo.tryItems" 
           :key="idx"
           :class="['try-item', { 'best': currentStepInfo.bestChoice === item.itemIdx }]"
         >
-          Item{{ item.itemIdx + 1 }}(w={{ item.w }},v={{ item.v }})
+          物品{{ item.itemIdx + 1 }}(w={{ item.w }},v={{ item.v }})
           <span v-if="item.canTake">→{{ item.newVal }}</span>
         </span>
       </div>
@@ -262,14 +262,14 @@ const getDecisionClass = (step) => {
         </span>
       </div>
       <div class="formula-desc">
-        Skip({{ currentStepInfo.notTake }} ways) + Take({{ currentStepInfo.take }} ways) = {{ currentStepInfo.val }} ways
+        不选({{ currentStepInfo.notTake }} 种) + 选择({{ currentStepInfo.take }} 种) = {{ currentStepInfo.val }} 种
       </div>
     </div>
 
     <!-- DP grid -->
     <div class="grid-wrapper">
       <div class="grid-header">
-        <div class="corner-cell">{{ isGroupType ? 'Group\\Capacity' : 'i \\ j' }}</div>
+        <div class="corner-cell">{{ isGroupType ? '分组\\容量' : 'i \\ j' }}</div>
         <div 
           v-for="j in (data.capacity + 1)" 
           :key="j"
@@ -325,19 +325,19 @@ const getDecisionClass = (step) => {
     <div class="legend">
       <div class="legend-item">
         <span class="legend-color current"></span>
-        <span>Current calculation</span>
+        <span>当前计算</span>
       </div>
       <div class="legend-item">
         <span class="legend-color without"></span>
-        <span>{{ isCompleteType ? 'Inherit from above' : 'Without dependency' }}</span>
+        <span>{{ isCompleteType ? '上行继承' : '不选依赖' }}</span>
       </div>
       <div class="legend-item">
         <span class="legend-color with"></span>
-        <span>{{ isCompleteType ? 'From left' : 'With dependency' }}</span>
+        <span>{{ isCompleteType ? '本行左侧' : '选择依赖' }}</span>
       </div>
       <div class="legend-item" v-if="data.path?.length > 0">
         <span class="legend-color path"></span>
-        <span>Optimal path</span>
+        <span>最优路径</span>
       </div>
     </div>
   </div>
