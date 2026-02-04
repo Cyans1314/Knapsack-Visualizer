@@ -2,6 +2,7 @@ appId: com.knapsack.visualizer
 productName: Knapsack Visualizer
 directories:
   buildResources: build
+  output: dist
 files:
   - '!**/.vscode/*'
   - '!src/*'
@@ -14,12 +15,16 @@ extraResources:
   - from: "./cpp/*.exe"
     to: "cpp"
 win:
-  executableName: knapsack-visualizer
+  executableName: Knapsack Visualizer
+  artifactName: Knapsack Visualizer.${ext}
+  target:
+    - nsis
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
-  shortcutName: ${productName}
-  uninstallDisplayName: ${productName}
-  createDesktopShortcut: always
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Knapsack Visualizer
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
@@ -29,16 +34,14 @@ mac:
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   notarize: false
 dmg:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: ${productName}.${ext}
 linux:
   target:
     - AppImage
-    - snap
-    - deb
   maintainer: electronjs.org
   category: Utility
 appImage:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: ${productName}.${ext}
 npmRebuild: false
 publish:
   provider: generic
