@@ -12,8 +12,10 @@ files:
 asarUnpack:
   - resources/**
 extraResources:
-  - from: "./cpp/*.exe"
+  - from: "./cpp"
     to: "cpp"
+    filter:
+      - "*.exe"
 win:
   executableName: Knapsack Visualizer
   artifactName: Knapsack Visualizer.${ext}
