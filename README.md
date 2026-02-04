@@ -50,20 +50,13 @@
 
 ### 安装步骤
 
-#### 1. 克隆项目
-
-```bash
-git clone https://github.com/Cyans1314/knapsack-visualizer.git
-cd knapsack-visualizer
-```
-
-#### 2. 安装依赖
+#### 1. 安装依赖
 
 ```bash
 npm install
 ```
 
-#### 3. 编译 C++ 算法
+#### 2. 编译 C++ 算法
 
 ```bash
 cd cpp
@@ -75,7 +68,7 @@ cd cpp
 ./build.sh
 ```
 
-#### 4. 开发模式运行
+#### 3. 开发模式运行
 
 ```bash
 npm run dev
